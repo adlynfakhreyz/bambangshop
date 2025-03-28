@@ -58,12 +58,12 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [v] Commit: `Implement delete function in Subscriber repository.`
     -   [v] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
 -   **STAGE 2: Implement services and controllers**
-    -   [ ] Commit: `Create Notification service struct skeleton.`
-    -   [ ] Commit: `Implement subscribe function in Notification service.`
-    -   [ ] Commit: `Implement subscribe function in Notification controller.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification service.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
+    -   [v] Commit: `Create Notification service struct skeleton.`
+    -   [v] Commit: `Implement subscribe function in Notification service.`
+    -   [v] Commit: `Implement subscribe function in Notification controller.`
+    -   [v] Commit: `Implement unsubscribe function in Notification service.`
+    -   [v] Commit: `Implement unsubscribe function in Notification controller.`
+    -   [v] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
 -   **STAGE 3: Implement notification mechanism**
     -   [ ] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
     -   [ ] Commit: `Implement notify function in Notification service to notify each Subscriber.`
@@ -85,5 +85,11 @@ This is the place for you to write reflections:
 3. Dalam pemrograman Rust, kita memang diharuskan oleh compiler untuk membuat program yang thread-safe. Untuk variabel static SUBSCRIBERS, penggunaan DashMap sebagai library eksternal untuk HashMap yang thread-safe memang diperlukan. Kita masih membutuhkan DashMap meskipun kita mengimplementasikan pola Singleton, karena Singleton hanya memastikan bahwa hanya ada satu instance dari kelas tertentu, tetapi tidak otomatis membuat akses ke data di dalamnya menjadi thread-safe. DashMap memberikan mekanisme concurrent yang aman untuk akses baca dan tulis secara bersamaan, yang penting dalam konteks multi-thread. Jadi, untuk kasus ini, implementasi Singleton tidak menggantikan kebutuhan akan DashMap, melainkan keduanya dapat digunakan bersama-sama untuk memastikan single instance yang thread-safe.
 
 #### Reflection Publisher-2
+
+1. Berdasarkan pemahaman saya tentang prinsip desain software, pemisahan Model menjadi "Service" dan "Repository" sangat penting untuk menerapkan prinsip Single Responsibility Principle (SRP) dari SOLID. Dengan separasi ini, Repository bertanggung jawab khusus untuk operasi penyimpanan data dan interaksi dengan database, sementara Service berfokus pada logika bisnis dan aturan aplikasi. Pemisahan ini membuat kode lebih terstruktur, mudah diuji (testable), dan lebih mudah dimaintain. Ketika kita perlu mengubah cara penyimpanan data, kita hanya perlu memodifikasi Repository tanpa menyentuh logika bisnis di Service, dan sebaliknya.
+
+2. Jika kita hanya menggunakan Model tanpa pemisahan Service dan Repository, kompleksitas kode akan meningkat secara signifikan. Bayangkan jika ketiga model kita (Program, Subscriber, Notification) harus menangani penyimpanan data, logika bisnis, dan validasi secara bersamaan. Setiap model akan menjadi sangat besar dan sulit dipahami. Selain itu, akan terjadi banyak duplikasi kode karena logika yang serupa mungkin perlu diimplementasikan di beberapa model. Interaksi antar model juga akan lebih rumit karena setiap model perlu mengetahui detail implementasi model lainnya. Misalnya, jika Program perlu mengirim notifikasi ke Subscriber, tanpa pemisahan Service, Program harus mengetahui cara mengakses dan memperbarui data Notification secara langsung, yang meningkatkan coupling dan mengurangi maintainability kode.
+
+3. Dengan menggunakan Postman, kita dapat mengamati dan memverifikasi apakah perilaku aplikasi sudah sesuai dengan ekspektasi kita. Tool ini memungkinkan kita untuk mengirimkan berbagai jenis HTTP method, menambahkan credential autentikasi, menyertakan form data, sertaa elemen-elemen request lainnya. Selain itu, Postman akan menampilkan response dari server, sehingga memudahkan kita untuk mengevaluasi apakah endpoint berfungsi dengan benar sesuai harapan. Kemampuan ini sangat berharga dalam proses pengembangan karena kita dapat dengan cepat memastikan endpoint kita bekerja sebagaimana mestinya.
 
 #### Reflection Publisher-3
