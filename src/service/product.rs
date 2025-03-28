@@ -14,7 +14,7 @@ impl ProductService {
         product.product_type = product.product_type.to_uppercase();
         let product_result: Product = ProductRepository::add(product);
 
-        NotificationService.notify(&product.product_type, "CREATED", product.clone());
+        NotificationService.notify(&product_result.product_type, "CREATED", product_result.clone());
         return Ok(product_result);
     }
 
