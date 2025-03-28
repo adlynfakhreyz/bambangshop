@@ -48,15 +48,15 @@ You can install Postman via this website: https://www.postman.com/downloads/
     (You might want to use `cargo check` if you only need to verify your work without running the app.)
 
 ## Mandatory Checklists (Publisher)
--   [ ] Clone https://gitlab.com/ichlaffterlalu/bambangshop to a new repository.
+-   [v] Clone https://gitlab.com/ichlaffterlalu/bambangshop to a new repository.
 -   **STAGE 1: Implement models and repositories**
-    -   [ ] Commit: `Create Subscriber model struct.`
-    -   [ ] Commit: `Create Notification model struct.`
-    -   [ ] Commit: `Create Subscriber database and Subscriber repository struct skeleton.`
-    -   [ ] Commit: `Implement add function in Subscriber repository.`
-    -   [ ] Commit: `Implement list_all function in Subscriber repository.`
-    -   [ ] Commit: `Implement delete function in Subscriber repository.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
+    -   [v] Commit: `Create Subscriber model struct.`
+    -   [v] Commit: `Create Notification model struct.`
+    -   [v] Commit: `Create Subscriber database and Subscriber repository struct skeleton.`
+    -   [v] Commit: `Implement add function in Subscriber repository.`
+    -   [v] Commit: `Implement list_all function in Subscriber repository.`
+    -   [v] Commit: `Implement delete function in Subscriber repository.`
+    -   [v] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
 -   **STAGE 2: Implement services and controllers**
     -   [ ] Commit: `Create Notification service struct skeleton.`
     -   [ ] Commit: `Implement subscribe function in Notification service.`
@@ -77,6 +77,12 @@ This is the place for you to write reflections:
 ### Mandatory (Publisher) Reflections
 
 #### Reflection Publisher-1
+
+1. Berdasarkan pemahaman saya tentang pola Observer, untuk kasus BambangShop ini, kita tidak memerlukan interface atau trait di Rust karena hanya ada satu tipe observer yaitu Subscriber. Interface atau trait biasanya diperlukan ketika terdapat beberapa jenis observer yang berbeda-beda yang perlu mengimplementasikan metode yang sama. Dalam kasus ini, struct Model tunggal sudah cukup karena semua subscriber memiliki perilaku yang sama dan tidak ada variasi implementasi yang diperlukan.
+
+2. Dalam kasus ini, penggunaan DashMap lebih tepat dibandingkan Vec karena id dalam Program dan url dalam Subscriber dimaksudkan untuk bersifat unik. DashMap memungkinkan kita untuk menyimpan data dalam struktur key-value, sehingga kita dapat dengan mudah mencari, menambah, atau menghapus subscriber berdasarkan id atau url mereka. Jika kita menggunakan Vec, kita harus melakukan iterasi manual untuk mencari elemen yang spesifik, yang bisa menjadi tidak efisien terutama ketika jumlah subscriber menjadi besar. Selain itu, DashMap juga mempermudah untuk memastikan keunikan data karena kita dapat memeriksa keberadaan key sebelum menyimpan data baru.
+
+3. Dalam pemrograman Rust, kita memang diharuskan oleh compiler untuk membuat program yang thread-safe. Untuk variabel static SUBSCRIBERS, penggunaan DashMap sebagai library eksternal untuk HashMap yang thread-safe memang diperlukan. Kita masih membutuhkan DashMap meskipun kita mengimplementasikan pola Singleton, karena Singleton hanya memastikan bahwa hanya ada satu instance dari kelas tertentu, tetapi tidak otomatis membuat akses ke data di dalamnya menjadi thread-safe. DashMap memberikan mekanisme concurrent yang aman untuk akses baca dan tulis secara bersamaan, yang penting dalam konteks multi-thread. Jadi, untuk kasus ini, implementasi Singleton tidak menggantikan kebutuhan akan DashMap, melainkan keduanya dapat digunakan bersama-sama untuk memastikan single instance yang thread-safe.
 
 #### Reflection Publisher-2
 
