@@ -1,8 +1,8 @@
-use rocket::serde::{Deserialize, Serialize};
+use rocket::serde::{Serialize, Deserialize};
 use rocket::log;
 use rocket::serde::json::to_string;
 use rocket::tokio;
-use bambangshop::REQUEST_CLIENT;
+use bambangshop::REQWEST_CLIENT;
 use crate::model::notification::Notification;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
